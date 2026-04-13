@@ -3,121 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Axiom Sentinel | M&A Risk Audit</title>
+    <title>Axiom Sentinel | M&A Autonomous Audit</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #0a0a0c; color: #e4e4e7; font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(23, 23, 27, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .btn-gradient { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); transition: all 0.3s ease; }
-        .btn-gradient:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -10px rgba(37, 99, 235, 0.5); }
+        body { background-color: #050505; color: #fafafa; font-family: 'Inter', sans-serif; }
+        .legal-card { background: #0f0f12; border: 1px solid #1f1f23; border-radius: 12px; }
+        .accent-border { border-top: 4px solid #3b82f6; }
+        .shimmer { background: linear-gradient(90deg, #0f0f12 25%, #1a1a1e 50%, #0f0f12 75%); background-size: 200% 100%; animation: shimmer 2s infinite; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     </style>
 </head>
-<body class="min-h-screen p-4 md:p-8">
-    <div class="max-w-4xl mx-auto">
-        <header class="mb-12 text-center">
-            <h1 class="text-4xl font-bold tracking-tight text-white mb-2">AXIOM <span class="text-blue-500">SENTINEL</span></h1>
-            <p class="text-zinc-400">Autonomous M&A Due Diligence & Risk Audit</p>
-        </header>
+<body class="min-h-screen flex flex-col items-center p-6 md:p-12">
 
-        <div class="glass p-6 rounded-2xl mb-8">
-            <label class="block text-sm font-medium text-zinc-400 mb-2">OpenAI API Key (Stored Locally)</label>
-            <input type="password" id="apiKey" placeholder="sk-..." class="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <div class="w-full max-w-3xl text-center mb-12">
+        <h1 class="text-3xl font-bold tracking-tighter text-white mb-2">AXIOM <span class="text-blue-500">SENTINEL</span></h1>
+        <p class="text-zinc-500 text-sm uppercase tracking-widest">Autonomous M&A Risk Intelligence</p>
+    </div>
+
+    <div class="w-full max-w-3xl space-y-6">
+        
+        <div id="paymentWall" class="legal-card p-8 accent-border text-center">
+            <h2 class="text-xl font-semibold mb-4 text-white">Access Premium Audit</h2>
+            <p class="text-zinc-400 mb-6 text-sm">One-time audit fee: <span class="text-white font-bold">$499</span>. Includes full Change of Control analysis and Redline Drafts.</p>
+            <a href="YOUR_STRIPE_PAYMENT_LINK_HERE" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-all w-full md:w-auto">
+                Pay to Unlock Auditor
+            </a>
+            <p class="mt-4 text-xs text-zinc-600">Secure payment via Stripe. Instant access post-purchase.</p>
         </div>
 
-        <div id="dropZone" class="glass border-2 border-dashed border-zinc-800 rounded-2xl p-12 text-center cursor-pointer hover:border-blue-500 transition-colors">
-            <div class="mb-4">
-                <svg class="mx-auto h-12 w-12 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+        <div id="uploadZone" class="hidden legal-card p-12 border-2 border-dashed border-zinc-800 hover:border-blue-500 transition-all cursor-pointer text-center">
+            <input type="file" id="pdfInput" class="hidden" accept="application/pdf">
+            <div class="space-y-4">
+                <div class="text-blue-500 text-4xl mx-auto">📄</div>
+                <h3 class="text-lg font-medium">Upload Warrant / Agreement</h3>
+                <p class="text-zinc-500 text-sm">Drag & Drop your PDF to begin the Agentic Audit</p>
             </div>
-            <p class="text-lg font-medium text-white">Upload PDF Warrant or Purchase Agreement</p>
-            <p class="text-sm text-zinc-500 mt-2">Drag and drop or click to browse</p>
-            <input type="file" id="fileInput" class="hidden" accept="application/pdf">
         </div>
 
-        <div id="status" class="hidden mt-6 p-4 rounded-lg bg-blue-500/10 text-blue-400 text-center border border-blue-500/20">
-            Scanning document...
+        <div id="processing" class="hidden legal-card p-12 shimmer text-center">
+            <p class="text-blue-400 font-semibold animate-pulse">AXIOM AGENT IS ANALYZING DOCUMENT SECTIONS...</p>
+            <p class="text-xs text-zinc-500 mt-2">Drafting Redline Fixes & Checking Compliance Gaps</p>
         </div>
 
-        <div id="results" class="hidden mt-8 glass p-8 rounded-2xl animate-in fade-in slide-in-from-bottom-4">
-            <div id="reportContent" class="prose prose-invert max-w-none"></div>
-            <button onclick="window.print()" class="mt-8 w-full py-4 rounded-xl font-bold text-white border border-zinc-700 hover:bg-zinc-800 transition-all">Download Risk Brief (PDF)</button>
+        <div id="reportSection" class="hidden space-y-4">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold">Audit Results</h2>
+                <button onclick="window.print()" class="text-xs bg-zinc-800 hover:bg-zinc-700 px-4 py-2 rounded">Export to PDF</button>
+            </div>
+            <div id="reportOutput" class="legal-card p-8 text-sm leading-relaxed text-zinc-300 overflow-y-auto max-h-[600px] whitespace-pre-wrap">
+                </div>
         </div>
     </div>
 
     <script>
-        const fileInput = document.getElementById('fileInput');
-        const dropZone = document.getElementById('dropZone');
-        const results = document.getElementById('results');
-        const status = document.getElementById('status');
-        const reportContent = document.getElementById('reportContent');
+        // --- CONFIGURATION ---
+        const GROK_API_KEY = "YOUR_GROK_API_KEY_HERE"; // PASTE YOUR KEY HERE
+        const STRIPE_LINK = "YOUR_STRIPE_PAYMENT_LINK_HERE"; // PASTE YOUR STRIPE LINK HERE
 
-        // Setup PDF.js
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+        // --- DOM ELEMENTS ---
+        const paymentWall = document.getElementById('paymentWall');
+        const uploadZone = document.getElementById('uploadZone');
+        const processing = document.getElementById('processing');
+        const reportSection = document.getElementById('reportSection');
+        const reportOutput = document.getElementById('reportOutput');
+        const pdfInput = document.getElementById('pdfInput');
 
-        dropZone.onclick = () => fileInput.click();
-        fileInput.onchange = (e) => handleFile(e.target.files[0]);
+        // BYPASS LOGIC: For your testing, we show upload. 
+        // In real life, you'd trigger this after Stripe redirects back.
+        uploadZone.classList.remove('hidden'); 
+        paymentWall.classList.add('hidden');
 
-        async function handleFile(file) {
-            const apiKey = document.getElementById('apiKey').value;
-            if (!apiKey) return alert("Please enter your OpenAI API Key first.");
+        uploadZone.onclick = () => pdfInput.click();
+
+        pdfInput.onchange = async (e) => {
+            const file = e.target.files[0];
             if (!file) return;
 
-            status.classList.remove('hidden');
-            results.classList.add('hidden');
+            uploadZone.classList.add('hidden');
+            processing.classList.remove('hidden');
 
             try {
-                // 1. Extract Text
+                // 1. PDF Text Extraction
                 const arrayBuffer = await file.arrayBuffer();
                 const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
-                let fullText = "";
+                let text = "";
                 for (let i = 1; i <= pdf.numPages; i++) {
                     const page = await pdf.getPage(i);
                     const content = await page.getTextContent();
-                    fullText += content.items.map(s => s.str).join(' ');
+                    text += content.items.map(s => s.str).join(" ");
                 }
 
-                // 2. Sanitize Text
-                const sanitizedText = fullText.replace(/"/g, "'").replace(/\n/g, " ");
-
-                // 3. Call OpenAI
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                    method: 'POST',
+                // 2. Grok API Request
+                const response = await fetch("https://api.x.ai/v1/chat/completions", {
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}`
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${GROK_API_KEY}`
                     },
                     body: JSON.stringify({
-                        model: "gpt-4-turbo", // High reasoning for legal redlines
-                        messages: [{
-                            role: "user",
-                            content: `ROLE: Senior M&A Attorney. CRITICAL: Exhaustive analysis. DO NOT SKIP sections.
-                            AUDIT TARGET: Analyze 'Change of Control' and 'Termination' clauses.
-                            WORKFLOW: For every Red Flag, provide: 1) Risk, 2) Location, 3) Proposed Redline Fix (corrected legal text).
-                            FORMAT:
-                            DOCUMENT TITLE: [Title]
-                            RISK SCORE: [1-10]
-                            RED FLAGS: [Bullet points with Redline Fixes]
-                            SUMMARY: [Impact overview]
-                            LEGAL NOTICE: For preliminary auditing purposes only; confirm with counsel.
-                            
-                            DOCUMENT TEXT: ${sanitizedText}`
-                        }]
+                        model: "grok-4-0709", // Current flagship reasoning model
+                        messages: [
+                            {
+                                role: "system",
+                                content: `ROLE: Senior M&A Attorney. CRITICAL INSTRUCTION: Exhaustive analysis. DO NOT SKIP sections. WORKFLOW: For every 'Red Flag', you must: 1) Identify Risk, 2) Locate Section, 3) Draft the 'Redline' fix (corrected text).`
+                            },
+                            {
+                                role: "user",
+                                content: `DOCUMENT TITLE: [Extract Title]
+RISK SCORE: [1-10]
+RED FLAGS: [List with Redlines]
+SUMMARY: [Impact overview]
+LEGAL NOTICE: For preliminary auditing purposes only; confirm with counsel.
+
+DOCUMENT TEXT: ${text.substring(0, 50000)}` // Safeguard for context window
+                            }
+                        ]
                     })
                 });
 
                 const data = await response.json();
-                const finalReport = data.choices[0].message.content;
-
-                // 4. Display Results
-                reportContent.innerHTML = finalReport.replace(/\n/g, '<br>');
-                status.classList.add('hidden');
-                results.classList.remove('hidden');
+                
+                // 3. Render Result
+                reportOutput.textContent = data.choices[0].message.content;
+                processing.classList.add('hidden');
+                reportSection.classList.remove('hidden');
 
             } catch (err) {
-                alert("Error: " + err.message);
-                status.classList.add('hidden');
+                alert("Audit Error: " + err.message);
+                processing.classList.add('hidden');
+                uploadZone.classList.remove('hidden');
             }
-        }
+        };
     </script>
 </body>
 </html>
