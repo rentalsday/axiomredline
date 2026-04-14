@@ -112,7 +112,7 @@
                     text += content.items.map(s => s.str).join(" ");
                 }
 
-                const response = await fetch('/api/audit', {
+                const response = await fetch('/api/audit.mjs', {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ text: text.substring(0, 50000) })
