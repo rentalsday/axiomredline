@@ -56,6 +56,8 @@ LEGAL NOTICE: For preliminary auditing purposes only; confirm with counsel.`
         });
 
         const data = await response.json();
+        if (!data.choices || data.choices.length === 0) {
+    return res.status(500).json({ error: "AI returned an empty response. Check API key/credits." });
         res.status(200).json(data);
     } catch (error) {
         res.status(500).json({ error: "Failed to reach Grok API" });
