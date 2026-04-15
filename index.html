@@ -143,7 +143,8 @@
         const IS_DEBUG_MODE = false; 
         const VALID_PROMO_CODES = ["VIPFREE", "BETA2026", "PARTNER_ACCESS"];
 
-        pdfjsLib.GlobalWorkerOptions.workerSrc = '/public/pdf.worker.min.js';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
 
         const uploadZone = document.getElementById('uploadZone');
         const processing = document.getElementById('processing');
