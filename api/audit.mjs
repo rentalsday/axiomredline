@@ -10,6 +10,26 @@ export default async function handler(req, res) {
         return res.status(500).json({ error: "API Key missing in Vercel settings." });
     }
 
+    // JSON-compliant prompt logic integrated into the system message
+    const systemPrompt = `ROLE: Lead M&A Partner and Adversarial Auditor.
+MISSION: Perform an exhaustive audit of the provided instrument for 'Change of Control', 'Termination', and structural M&A vulnerabilities.
+
+CRITICAL INSTRUCTIONS:
+1. NO TRUNCATION: Provide complete, ready-to-use legal clauses. Never end a redline with '...' or 'etc.'
+2. PRECISE MAPPING: Every 'Strategic Redline Solution' must explicitly state the drafting action (e.g., 'Replace Section X in its entirety with:', 'Amend Section Y to read:', or 'Insert new Section Z:').
+3. LOGIC FLOW: The Redline must directly solve the specific vulnerability found at the cited Location.
+4. CITATION RIGOR: Every red flag must be anchored to a specific Article, Section, or Paragraph number.
+
+OUTPUT FORMAT:
+DOCUMENT TITLE: [Title]
+RISK SCORE: [1-10/10]
+RED FLAGS: 
+- [Category]: [Vulnerability Description]. Location: [Precise Section].
+Proposed Redline Fix: [Drafting Instruction] '[Full, non-truncated legal text]'
+
+SUMMARY: [Executive synthesis of aggregate risks]
+LEGAL NOTICE: For preliminary auditing purposes only; confirm with counsel.`;
+
     try {
         const response = await fetch("https://api.x.ai/v1/chat/completions", {
             method: "POST",
@@ -22,10 +42,14 @@ export default async function handler(req, res) {
                 messages: [
                     { 
                         role: "system", 
-                        content: "ROLE: You are a Senior M&A Attorney and Expert Auditor. CRITICAL INSTRUCTION: You must perform a comprehensive analysis. DO NOT SKIP sections. Analyze for 'Change of Control', 'Termination', and M&A risks. For every identified \"Red Flag,\" you must: 1. Identify risk. 2. Locate section. 3. Draft the Fix: Provide a \"Redline\" (corrected legal text). OUTPUT FORMAT: DOCUMENT TITLE: [Title] RISK SCORE: [1-10] RED FLAGS: - [Category]: [Description]. Location: [Section] Proposed Redline Fix: [Text] SUMMARY: [Overview] LEGAL NOTICE: For preliminary auditing purposes only; confirm with counsel." 
+                        content: systemPrompt 
                     },
-                    { role: "user", content: text }
-                ]
+                    { 
+                        role: "user", 
+                        content: `Analyze the following legal text and provide the audit in the specified format:\n\n${text}` 
+                    }
+                ],
+                temperature: 0.1 // Kept low for consistent, professional legal drafting
             })
         });
 
