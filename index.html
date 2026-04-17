@@ -8,21 +8,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #050505; color: #fafafa; font-family: 'Inter', sans-serif; letter-spacing: -0.01em; }
+        body { background-color: #050505; color: #fafafa; font-family: 'Inter', sans-serif; }
         .legal-card { background: #0f0f12; border: 1px solid #1f1f23; border-radius: 8px; }
         .accent-gradient { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
         .shimmer { background: linear-gradient(90deg, #0f0f12 25%, #1a1a1e 50%, #0f0f12 75%); background-size: 200% 100%; animation: shimmer 2s infinite; }
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
         .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #71717a; }
-        .fade-in { animation: fadeIn 0.5s ease-in forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        @media print {
-            .no-print { display: none !important; }
-            #fullReportSection { display: block !important; background: white !important; color: black !important; padding: 40px; }
-            .legal-card { border: 1px solid #ddd !important; background: white !important; color: black !important; }
-            .text-zinc-400, .text-zinc-500 { color: #444 !important; }
-        }
+        @media print { .no-print { display: none !important; } #fullReportSection { display: block !important; background: white !important; color: black !important; padding: 20px; } }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center">
@@ -30,106 +22,74 @@
     <nav class="w-full max-w-6xl flex justify-between items-center p-8 no-print">
         <div class="flex items-center space-x-2">
             <div class="w-2 h-8 bg-blue-600"></div>
-            <h1 class="text-xl font-bold tracking-tighter uppercase">AXIOM <span class="text-blue-500">REDLINE</span></h1>
-        </div>
-        <div class="flex items-center space-x-6">
-            <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center">
-                <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span> SECURE RAM SESSION ACTIVE
-            </span>
+            <h1 class="text-xl font-bold tracking-tighter uppercase text-white">AXIOM <span class="text-blue-500">REDLINE</span></h1>
         </div>
     </nav>
 
     <main class="w-full max-w-4xl px-6 pb-24">
-        
         <header id="mainHeader" class="text-center py-12 no-print">
-            <h2 class="text-4xl md:text-5xl mb-6 font-bold leading-tight uppercase tracking-tighter text-white">Adversarial M&A Audit</h2>
-            <p class="text-zinc-400 text-lg max-w-2xl mx-auto mb-8 font-light">
-                Enterprise-grade risk intelligence for Purchase Agreements and Warrants. 
-            </p>
+            <h2 class="text-4xl font-bold uppercase tracking-tighter text-white">Adversarial M&A Audit</h2>
+            <p class="text-zinc-500 mt-2">Firm-level risk remediation for sophisticated M&A instruments.</p>
         </header>
 
         <section id="pricingSection" class="mb-12 no-print">
             <div class="legal-card p-1 border-blue-900/20 bg-zinc-900/30 overflow-hidden">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+                <div class="grid grid-cols-1 md:grid-cols-2">
                     <div class="p-8 border-b md:border-b-0 md:border-r border-zinc-800">
-                        <span class="px-2 py-1 bg-zinc-800 text-zinc-400 text-[9px] font-bold rounded uppercase mb-4 inline-block tracking-widest">On-Demand</span>
-                        <h4 class="text-xl font-bold mb-2 text-white">Single Audit</h4>
-                        <p class="text-zinc-500 text-sm mb-6">One-time adversarial scan with full redline remediation fixes.</p>
-                        <p class="text-2xl font-black text-white">$499 <span class="text-xs text-zinc-600 font-normal uppercase">/ per scan</span></p>
+                        <h4 class="text-xl font-bold text-white">Single Audit</h4>
+                        <p class="text-2xl font-black text-white mt-4">$499 <span class="text-xs text-zinc-600 font-normal uppercase">/ scan</span></p>
                     </div>
-                    <div class="p-8 bg-blue-600/5 relative">
-                        <div class="absolute top-4 right-4 animate-pulse"><span class="bg-blue-600 text-white text-[8px] font-black px-2 py-1 rounded">MOST POPULAR</span></div>
-                        <span class="px-2 py-1 bg-blue-600/20 text-blue-500 text-[9px] font-bold rounded uppercase mb-4 inline-block tracking-widest">Firm License</span>
-                        <h4 class="text-xl font-bold mb-2 text-white">Unlimited Scans</h4>
-                        <p class="text-zinc-500 text-sm mb-6">Equip your entire firm with senior-level risk triage automation.</p>
-                        <div class="space-y-2">
-                            <p class="text-2xl font-black text-white">$2,500 <span class="text-xs text-zinc-600 font-normal uppercase">/ mo</span></p>
-                            <button onclick="alert('Contacting Enterprise Sales Team...')" class="text-xs font-bold text-blue-500 underline hover:text-blue-400 transition-colors uppercase tracking-widest">
-                                Or $21,000 / year (Paid Annually)
-                            </button>
-                        </div>
+                    <div class="p-8 bg-blue-600/5">
+                        <h4 class="text-xl font-bold text-white">Firm License</h4>
+                        <p class="text-2xl font-black text-white mt-4">$2,500 <span class="text-xs text-zinc-600 font-normal uppercase">/ mo</span></p>
+                        <p class="text-[10px] font-bold text-blue-500 mt-2 uppercase tracking-widest">Or $21,000 Annual Plan</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <div id="uploadZone" class="legal-card p-16 border-2 border-dashed border-zinc-800 hover:border-blue-500/50 transition-all cursor-pointer text-center group no-print">
+        <div id="uploadZone" class="legal-card p-16 border-2 border-dashed border-zinc-800 hover:border-blue-500/50 transition-all cursor-pointer text-center no-print">
             <input type="file" id="pdfInput" class="hidden" accept="application/pdf">
-            <div class="space-y-6">
-                <div class="text-5xl group-hover:scale-110 transition-transform duration-300">🛡️</div>
-                <div>
-                    <h3 class="text-xl font-semibold text-white mb-2">Initialize Secure Audit</h3>
-                    <p class="text-zinc-500 text-sm max-w-xs mx-auto">Upload Document (PDF). Processing occurs in volatile RAM.</p>
-                </div>
-                <div class="inline-block px-8 py-3 bg-blue-600 text-white text-xs font-bold rounded hover:bg-blue-500 transition-all uppercase tracking-widest">
-                    Analyze Instrument
-                </div>
+            <div class="space-y-4">
+                <div class="text-5xl">📄</div>
+                <h3 class="text-xl font-semibold text-white">Upload Instrument</h3>
+                <div class="inline-block px-8 py-3 bg-blue-600 text-white text-xs font-bold rounded uppercase tracking-widest">Start Analysis</div>
             </div>
         </div>
 
-        <div id="processing" class="hidden mt-8 space-y-4 no-print">
+        <div id="processing" class="hidden mt-8 no-print">
             <div class="legal-card p-12 shimmer text-center">
-                <div class="w-12 h-12 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-                <h3 class="text-lg font-bold text-white uppercase tracking-tighter mb-4">Adversarial Logic Engine Engaged</h3>
+                <div class="w-10 h-10 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
                 <div id="reasoningStream" class="space-y-2 text-left max-w-xs mx-auto"></div>
             </div>
         </div>
 
         <div id="previewSection" class="hidden mt-8 space-y-6 no-print">
             <div class="legal-card border-l-4 border-red-600 bg-red-600/5 p-8">
-                <div class="flex justify-between items-center mb-6">
-                    <div><span class="stat-label">Triage Results</span><h3 id="docTitlePreview" class="text-xl font-bold text-white uppercase mt-1">Audit Preview</h3></div>
-                    <div class="text-right"><span class="stat-label">Risk Index</span><p id="riskScorePreview" class="text-4xl font-black text-red-500 tracking-tighter">HIGH</p></div>
+                <div class="flex justify-between items-start mb-6">
+                    <div><span class="stat-label">Document</span><h3 id="docTitlePreview" class="text-xl font-bold text-white uppercase">Loading...</h3></div>
+                    <div class="text-right"><span class="stat-label">Risk Index</span><p id="riskScorePreview" class="text-3xl font-black text-red-500">HIGH</p></div>
                 </div>
-                <div id="vulnerabilityBreakdown" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"></div>
-                <div class="pt-6 border-t border-zinc-800"><p class="stat-label mb-4 text-red-500">Unremediated Triggers Found:</p><div id="previewFlags" class="space-y-3 opacity-50 blur-[2px]"></div></div>
+                <div id="vulnerabilityBreakdown" class="grid grid-cols-3 gap-4"></div>
             </div>
 
-            <div id="paymentWall" class="legal-card p-10 text-center bg-zinc-900/50">
-                <h2 class="text-2xl font-bold mb-3 text-white">Access Redline Remediation</h2>
-                <p class="text-zinc-400 mb-8 text-sm max-w-md mx-auto">The full report includes side-by-side strategic fixes for every identified risk.</p>
-                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
-                    <a href="https://checkout.square.site/merchant/MLVGH4WA7D1RJ/checkout/VPK7UAFTJSKHDV77FNTMZTZR" class="accent-gradient text-white font-bold py-5 px-10 rounded-lg transition-all hover:scale-[1.05] inline-block shadow-xl uppercase tracking-widest text-xs">Unlock Audit ($499)</a>
-                    <button class="bg-zinc-800 border border-zinc-700 text-zinc-400 font-bold py-5 px-10 rounded-lg hover:text-white transition-all uppercase tracking-widest text-xs">Firm Upgrade</button>
-                </div>
-
-                <div class="pt-10 border-t border-zinc-800 w-full mt-10 flex flex-col items-center">
-                    <p class="text-[10px] text-zinc-500 uppercase tracking-widest mb-3">Redeem Invite Code</p>
-                    <div class="flex space-x-2">
-                        <input type="text" id="promoCode" placeholder="CODE" class="bg-zinc-800 border border-zinc-700 rounded px-4 py-2 text-xs text-white focus:outline-none focus:border-blue-500 uppercase w-24">
-                        <button onclick="applyPromoCode()" class="bg-zinc-700 text-white text-[10px] font-bold px-4 py-2 rounded hover:bg-zinc-600 uppercase">Apply</button>
-                    </div>
-                    <p id="promoError" class="text-red-500 text-[10px] mt-2 hidden">Invalid code</p>
+            <div class="legal-card p-10 text-center bg-zinc-900/50">
+                <h2 class="text-xl font-bold text-white mb-6 tracking-tight">Unlock Full Side-by-Side Redlines</h2>
+                <a href="https://checkout.square.site/merchant/MLVGH4WA7D1RJ/checkout/VPK7UAFTJSKHDV77FNTMZTZR" class="accent-gradient text-white font-bold py-4 px-10 rounded uppercase text-xs tracking-widest inline-block">Purchase Report ($499)</a>
+                <div class="mt-8 pt-8 border-t border-zinc-800">
+                    <p class="stat-label mb-2">Invite Code</p>
+                    <input type="text" id="promoCode" placeholder="ENTER CODE" class="bg-zinc-800 border border-zinc-700 rounded px-4 py-2 text-xs text-white uppercase w-32">
+                    <button onclick="applyPromoCode()" class="bg-zinc-700 text-white text-[10px] font-bold px-4 py-2 rounded ml-2 uppercase">Apply</button>
                 </div>
             </div>
         </div>
 
-        <div id="fullReportSection" class="hidden mt-8 space-y-8 animate-in">
+        <div id="fullReportSection" class="hidden mt-8 space-y-8">
             <div class="flex justify-between items-center border-b border-zinc-800 pb-6 no-print">
-                <h1 class="text-2xl font-black uppercase italic tracking-tighter">Strategic Risk Report</h1>
+                <h1 class="text-2xl font-black uppercase tracking-tighter">Strategic Audit Report</h1>
                 <div class="space-x-4">
-                    <button onclick="window.print()" class="text-[10px] font-bold border border-zinc-700 px-4 py-2 rounded hover:bg-white hover:text-black transition-all uppercase">Print / Save</button>
-                    <button onclick="location.reload()" class="text-[10px] font-bold bg-red-900/20 text-red-500 px-4 py-2 rounded uppercase">Wipe Session</button>
+                    <button onclick="window.print()" class="text-[10px] font-bold border border-zinc-700 px-4 py-2 rounded uppercase">Export PDF</button>
+                    <button onclick="location.reload()" class="text-[10px] font-bold bg-red-900/20 text-red-500 px-4 py-2 rounded uppercase">Purge Session</button>
                 </div>
             </div>
             <div id="fullReportOutput" class="space-y-8"></div>
@@ -137,49 +97,45 @@
     </main>
 
     <script>
-        const VALID_PROMO_CODES = ["VIPFREE", "BETA2026", "PARTNER_ACCESS"];
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
-        async function startReasoningStream() {
-            const steps = ["Decrypting instrument...", "Scanning for 'Change of Control'...", "Auditing structural triggers...", "Mapping revenue leakage...", "Drafting strategic redlines..."];
+        async function startReasoning() {
+            const steps = ["Parsing clauses...", "Checking 'Change of Control' triggers...", "Auditing structural overhang...", "Drafting strategic redlines..."];
             const stream = document.getElementById('reasoningStream');
             stream.innerHTML = "";
-            for (const step of steps) {
+            for (const s of steps) {
                 const div = document.createElement('div');
-                div.className = "text-[10px] text-zinc-500 flex items-center fade-in py-1";
-                div.innerHTML = `<span class="w-1 h-1 bg-blue-500 mr-2 rounded-full"></span> ${step}`;
+                div.className = "text-[10px] text-zinc-500 flex items-center py-1";
+                div.innerHTML = `<span class="w-1 h-1 bg-blue-500 mr-2"></span> ${s}`;
                 stream.appendChild(div);
-                await new Promise(r => setTimeout(r, 700));
+                await new Promise(r => setTimeout(r, 800));
             }
         }
 
         function formatFinalReport(raw) {
-            // FIX: Match the prompt's exact string to prevent empty boxes
-            const redFlagsSection = raw.match(/RED FLAGS:([\s\S]*?)SUMMARY:/)?.[1] || "";
-            const lines = redFlagsSection.split('\n').filter(l => l.includes('Proposed Redline Fix:'));
-            
-            if (lines.length === 0) return `<div class="p-8 legal-card text-center text-zinc-500 uppercase tracking-widest text-xs">Standard report generated. No high-risk adversarial redlines required.</div>`;
+            const redFlagsBlock = raw.match(/RED FLAGS:([\s\S]*?)SUMMARY:/)?.[1] || "";
+            const flagLines = redFlagsBlock.split('\n').filter(l => l.includes('Proposed Redline Fix:'));
 
-            return `<div class="space-y-12">
-                ${lines.map(line => {
-                    const parts = line.split('Proposed Redline Fix:');
-                    const risk = parts[0].replace(/^- /, '').trim();
-                    const fix = parts[1] ? parts[1].trim() : "Optimal protection language generated by Axiom Redline.";
-                    
-                    return `
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="legal-card p-6 border-l-2 border-red-900 bg-red-900/5">
-                                <span class="stat-label text-red-500">Current Risk Language</span>
-                                <p class="text-[13px] text-zinc-400 mt-4 leading-relaxed font-light">${risk}</p>
-                            </div>
-                            <div class="legal-card p-6 border-l-2 border-green-600 bg-green-600/5">
-                                <span class="stat-label text-green-500">Strategic Axiom Fix</span>
-                                <p class="text-[13px] text-green-50 mt-4 leading-relaxed font-medium italic">${fix}</p>
-                            </div>
+            if (flagLines.length === 0) return `<div class="p-8 text-center text-zinc-500">Document analyzed. Standard terms detected.</div>`;
+
+            return flagLines.map(line => {
+                const [riskPart, fixPart] = line.split('Proposed Redline Fix:');
+                const riskClean = riskPart.replace(/^- /, '').trim();
+                const fixClean = fixPart ? fixPart.trim() : "Optimal protection language provided in full report.";
+
+                return `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="legal-card p-6 border-l-2 border-red-900 bg-red-900/5">
+                            <span class="stat-label text-red-500">Current Risk Language</span>
+                            <p class="text-sm text-zinc-400 mt-4 leading-relaxed">${riskClean}</p>
                         </div>
-                    `;
-                }).join('')}
-            </div>`;
+                        <div class="legal-card p-6 border-l-2 border-green-600 bg-green-600/5">
+                            <span class="stat-label text-green-500">Strategic Axiom Fix</span>
+                            <p class="text-sm text-green-50 mt-4 leading-relaxed italic font-medium">${fixClean}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
         const pdfInput = document.getElementById('pdfInput');
@@ -190,75 +146,58 @@
             if (!file) return;
 
             uploadZone.classList.add('hidden');
-            document.getElementById('mainHeader').classList.add('hidden');
             document.getElementById('pricingSection').classList.add('hidden');
             document.getElementById('processing').classList.remove('hidden');
-            await startReasoningStream();
+            await startReasoning();
 
-            try {
-                const arrayBuffer = await file.arrayBuffer();
-                const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
-                let text = "";
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    const page = await pdf.getPage(i);
-                    const content = await page.getTextContent();
-                    text += content.items.map(s => s.str).join(" ");
-                }
-
-                const response = await fetch('/api/audit', {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ text: text.substring(0, 45000) })
-                });
-                
-                const data = await response.json();
-                const fullText = data.choices[0].message.content;
-                localStorage.setItem('lastReport', fullText);
-
-                document.getElementById('docTitlePreview').innerText = fullText.match(/DOCUMENT TITLE: (.*)/)?.[1] || "M&A Instrument";
-                document.getElementById('riskScorePreview').innerText = fullText.match(/RISK SCORE: (.*)/)?.[1] || "HIGH";
-                
-                const flagCount = (fullText.match(/Proposed Redline Fix:/g) || []).length;
-                document.getElementById('vulnerabilityBreakdown').innerHTML = `
-                    <div class="p-4 bg-zinc-900 border border-zinc-800 rounded"><p class="stat-label">Deal-Killers</p><p class="text-xl font-bold text-white">${flagCount}</p></div>
-                    <div class="p-4 bg-zinc-900 border border-zinc-800 rounded"><p class="stat-label">Structural Gaps</p><p class="text-xl font-bold text-white">2</p></div>
-                    <div class="p-4 bg-zinc-900 border border-zinc-800 rounded"><p class="stat-label">Fixes Loaded</p><p class="text-xl font-bold text-blue-500">READY</p></div>
-                `;
-
-                document.getElementById('processing').classList.add('hidden');
-                document.getElementById('previewSection').classList.remove('hidden');
-
-            } catch (err) {
-                alert("Audit Failed. File might be protected.");
-                location.reload();
+            const arrayBuffer = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+            let text = "";
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const content = await page.getTextContent();
+                text += content.items.map(s => s.str).join(" ");
             }
+
+            const response = await fetch('/api/audit', {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ text: text.substring(0, 40000) })
+            });
+
+            const data = await response.json();
+            const fullText = data.choices[0].message.content;
+            localStorage.setItem('lastReport', fullText);
+
+            document.getElementById('docTitlePreview').innerText = fullText.match(/DOCUMENT TITLE: (.*)/)?.[1] || "M&A Instrument";
+            document.getElementById('vulnerabilityBreakdown').innerHTML = `
+                <div class="p-4 bg-zinc-900 rounded border border-zinc-800 text-center"><p class="stat-label">Triggers</p><p class="text-xl font-bold text-white">${(fullText.match(/Proposed Redline Fix:/g) || []).length}</p></div>
+                <div class="p-4 bg-zinc-900 rounded border border-zinc-800 text-center"><p class="stat-label">Status</p><p class="text-sm font-bold text-red-500 uppercase mt-2">Critical</p></div>
+                <div class="p-4 bg-zinc-900 rounded border border-zinc-800 text-center"><p class="stat-label">Remedy</p><p class="text-xs font-bold text-blue-500 mt-2 uppercase">Ready</p></div>
+            `;
+
+            document.getElementById('processing').classList.add('hidden');
+            document.getElementById('previewSection').classList.remove('hidden');
         };
 
         function applyPromoCode() {
-            const input = document.getElementById('promoCode').value.trim().toUpperCase();
-            const savedReport = localStorage.getItem('lastReport');
-            if (VALID_PROMO_CODES.includes(input) && savedReport) {
+            const code = document.getElementById('promoCode').value.trim().toUpperCase();
+            if (["VIPFREE", "BETA2026"].includes(code)) {
+                const report = localStorage.getItem('lastReport');
                 document.getElementById('previewSection').classList.add('hidden');
-                document.getElementById('fullReportOutput').innerHTML = formatFinalReport(savedReport);
+                document.getElementById('fullReportOutput').innerHTML = formatFinalReport(report);
                 document.getElementById('fullReportSection').classList.remove('hidden');
-            } else {
-                document.getElementById('promoError').classList.remove('hidden');
-            }
+            } else { alert("Invalid Code"); }
         }
 
-        // Handle successful payment redirect
         if (window.location.search.includes('checkoutId')) {
             const report = localStorage.getItem('lastReport');
             if (report) {
                 document.getElementById('uploadZone').classList.add('hidden');
-                document.getElementById('fullReportSection').classList.remove('hidden');
                 document.getElementById('fullReportOutput').innerHTML = formatFinalReport(report);
+                document.getElementById('fullReportSection').classList.remove('hidden');
             }
         }
-
-        window.addEventListener('beforeunload', () => {
-            if (!window.location.search.includes('transaction_id')) localStorage.removeItem('lastReport');
-        });
     </script>
 </body>
 </html>
