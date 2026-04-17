@@ -8,89 +8,90 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #050505; color: #fafafa; font-family: 'Inter', sans-serif; }
+        body { background-color: #050505; color: #fafafa; font-family: 'Inter', sans-serif; letter-spacing: -0.01em; }
         .legal-card { background: #0f0f12; border: 1px solid #1f1f23; border-radius: 8px; }
         .accent-gradient { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
         .shimmer { background: linear-gradient(90deg, #0f0f12 25%, #1a1a1e 50%, #0f0f12 75%); background-size: 200% 100%; animation: shimmer 2s infinite; }
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
         .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #71717a; }
-        @media print { .no-print { display: none !important; } #fullReportSection { display: block !important; background: white !important; color: black !important; padding: 20px; } }
+        .fade-in { animation: fadeIn 0.5s ease-in forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center">
 
-    <nav class="w-full max-w-6xl flex justify-between items-center p-8 no-print">
+    <nav class="w-full max-w-6xl flex justify-between items-center p-8">
         <div class="flex items-center space-x-2">
             <div class="w-2 h-8 bg-blue-600"></div>
-            <h1 class="text-xl font-bold tracking-tighter uppercase text-white">AXIOM <span class="text-blue-500">REDLINE</span></h1>
+            <h1 class="text-xl font-bold tracking-tighter uppercase">AXIOM <span class="text-blue-500">REDLINE</span></h1>
         </div>
+        <div class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">SECURE RAM SESSION</div>
     </nav>
 
     <main class="w-full max-w-4xl px-6 pb-24">
-        <header id="mainHeader" class="text-center py-12 no-print">
-            <h2 class="text-4xl font-bold uppercase tracking-tighter text-white">Adversarial M&A Audit</h2>
-            <p class="text-zinc-500 mt-2">Firm-level risk remediation for sophisticated M&A instruments.</p>
+        
+        <header id="mainHeader" class="text-center py-12">
+            <h2 class="text-4xl md:text-5xl mb-6 font-bold leading-tight uppercase text-white">Adversarial M&A Audit</h2>
+            <p class="text-zinc-400 text-lg max-w-2xl mx-auto">Remediate high-stakes risk in SPAs and Warrants instantly.</p>
         </header>
 
-        <section id="pricingSection" class="mb-12 no-print">
-            <div class="legal-card p-1 border-blue-900/20 bg-zinc-900/30 overflow-hidden">
-                <div class="grid grid-cols-1 md:grid-cols-2">
-                    <div class="p-8 border-b md:border-b-0 md:border-r border-zinc-800">
-                        <h4 class="text-xl font-bold text-white">Single Audit</h4>
-                        <p class="text-2xl font-black text-white mt-4">$499 <span class="text-xs text-zinc-600 font-normal uppercase">/ scan</span></p>
-                    </div>
-                    <div class="p-8 bg-blue-600/5">
-                        <h4 class="text-xl font-bold text-white">Firm License</h4>
-                        <p class="text-2xl font-black text-white mt-4">$2,500 <span class="text-xs text-zinc-600 font-normal uppercase">/ mo</span></p>
-                        <p class="text-[10px] font-bold text-blue-500 mt-2 uppercase tracking-widest">Or $21,000 Annual Plan</p>
-                    </div>
+        <section id="pricingSection" class="mb-12">
+            <div class="legal-card p-1 border-blue-900/20 bg-zinc-900/30 overflow-hidden grid grid-cols-1 md:grid-cols-2">
+                <div class="p-8 border-b md:border-b-0 md:border-r border-zinc-800">
+                    <h4 class="text-xl font-bold">Single Audit</h4>
+                    <p class="text-2xl font-black mt-4">$499 <span class="text-xs text-zinc-600 font-normal uppercase">/ scan</span></p>
+                </div>
+                <div class="p-8 bg-blue-600/5">
+                    <h4 class="text-xl font-bold text-blue-400">Firm License</h4>
+                    <p class="text-2xl font-black mt-4">$2,500 <span class="text-xs text-zinc-600 font-normal uppercase">/ mo</span></p>
+                    <p class="text-[10px] font-bold text-blue-500 mt-2 uppercase underline cursor-pointer">Or $21,000 Annual Plan</p>
                 </div>
             </div>
         </section>
 
-        <div id="uploadZone" class="legal-card p-16 border-2 border-dashed border-zinc-800 hover:border-blue-500/50 transition-all cursor-pointer text-center no-print">
+        <div id="uploadZone" class="legal-card p-16 border-2 border-dashed border-zinc-800 hover:border-blue-500/50 transition-all cursor-pointer text-center group">
             <input type="file" id="pdfInput" class="hidden" accept="application/pdf">
-            <div class="space-y-4">
-                <div class="text-5xl">📄</div>
-                <h3 class="text-xl font-semibold text-white">Upload Instrument</h3>
-                <div class="inline-block px-8 py-3 bg-blue-600 text-white text-xs font-bold rounded uppercase tracking-widest">Start Analysis</div>
+            <div class="space-y-6">
+                <div class="text-5xl">🛡️</div>
+                <h3 class="text-xl font-semibold text-white">Initialize Audit</h3>
+                <div class="inline-block px-8 py-3 bg-blue-600 text-white text-xs font-bold rounded uppercase tracking-widest">Select File</div>
             </div>
         </div>
 
-        <div id="processing" class="hidden mt-8 no-print">
+        <div id="processing" class="hidden mt-8">
             <div class="legal-card p-12 shimmer text-center">
-                <div class="w-10 h-10 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-                <div id="reasoningStream" class="space-y-2 text-left max-w-xs mx-auto"></div>
+                <div class="w-12 h-12 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+                <h3 class="text-lg font-bold text-white uppercase tracking-tighter">Engaging Logic Engine</h3>
+                <div id="reasoningStream" class="mt-4 space-y-2 text-left max-w-xs mx-auto"></div>
             </div>
         </div>
 
-        <div id="previewSection" class="hidden mt-8 space-y-6 no-print">
+        <div id="previewSection" class="hidden mt-8 space-y-6">
             <div class="legal-card border-l-4 border-red-600 bg-red-600/5 p-8">
                 <div class="flex justify-between items-start mb-6">
-                    <div><span class="stat-label">Document</span><h3 id="docTitlePreview" class="text-xl font-bold text-white uppercase">Loading...</h3></div>
-                    <div class="text-right"><span class="stat-label">Risk Index</span><p id="riskScorePreview" class="text-3xl font-black text-red-500">HIGH</p></div>
+                    <div><span class="stat-label">Analysis Result</span><h3 id="docTitlePreview" class="text-xl font-bold text-white uppercase mt-1">Instrument Audit</h3></div>
+                    <div class="text-right"><span class="stat-label">Risk Index</span><p id="riskScorePreview" class="text-4xl font-black text-red-500">HIGH</p></div>
                 </div>
                 <div id="vulnerabilityBreakdown" class="grid grid-cols-3 gap-4"></div>
             </div>
 
-            <div class="legal-card p-10 text-center bg-zinc-900/50">
-                <h2 class="text-xl font-bold text-white mb-6 tracking-tight">Unlock Full Side-by-Side Redlines</h2>
-                <a href="https://checkout.square.site/merchant/MLVGH4WA7D1RJ/checkout/VPK7UAFTJSKHDV77FNTMZTZR" class="accent-gradient text-white font-bold py-4 px-10 rounded uppercase text-xs tracking-widest inline-block">Purchase Report ($499)</a>
-                <div class="mt-8 pt-8 border-t border-zinc-800">
-                    <p class="stat-label mb-2">Invite Code</p>
-                    <input type="text" id="promoCode" placeholder="ENTER CODE" class="bg-zinc-800 border border-zinc-700 rounded px-4 py-2 text-xs text-white uppercase w-32">
-                    <button onclick="applyPromoCode()" class="bg-zinc-700 text-white text-[10px] font-bold px-4 py-2 rounded ml-2 uppercase">Apply</button>
+            <div class="legal-card p-10 text-center bg-zinc-900/50 border-blue-900/30">
+                <h2 class="text-2xl font-bold mb-8">Unlock Side-by-Side Redlines</h2>
+                <a href="https://checkout.square.site/merchant/MLVGH4WA7D1RJ/checkout/VPK7UAFTJSKHDV77FNTMZTZR" class="accent-gradient text-white font-bold py-5 px-12 rounded-lg uppercase tracking-widest text-xs inline-block">Purchase Audit ($499)</a>
+                <div class="mt-10 pt-10 border-t border-zinc-800 flex flex-col items-center">
+                    <p class="stat-label mb-3">Invite Code</p>
+                    <div class="flex space-x-2">
+                        <input type="text" id="promoCode" placeholder="CODE" class="bg-zinc-800 border border-zinc-700 rounded px-4 py-2 text-xs text-white uppercase w-24">
+                        <button onclick="applyPromoCode()" class="bg-zinc-700 text-white text-[10px] font-bold px-4 py-2 rounded uppercase">Apply</button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div id="fullReportSection" class="hidden mt-8 space-y-8">
-            <div class="flex justify-between items-center border-b border-zinc-800 pb-6 no-print">
-                <h1 class="text-2xl font-black uppercase tracking-tighter">Strategic Audit Report</h1>
-                <div class="space-x-4">
-                    <button onclick="window.print()" class="text-[10px] font-bold border border-zinc-700 px-4 py-2 rounded uppercase">Export PDF</button>
-                    <button onclick="location.reload()" class="text-[10px] font-bold bg-red-900/20 text-red-500 px-4 py-2 rounded uppercase">Purge Session</button>
-                </div>
+            <div class="flex justify-between items-center border-b border-zinc-800 pb-6">
+                <h1 class="text-2xl font-black uppercase italic">Executive Risk Audit</h1>
+                <button onclick="location.reload()" class="text-[10px] font-bold bg-red-900/20 text-red-500 px-4 py-2 rounded uppercase">Wipe Session</button>
             </div>
             <div id="fullReportOutput" class="space-y-8"></div>
         </div>
@@ -99,42 +100,37 @@
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
-        async function startReasoning() {
-            const steps = ["Parsing clauses...", "Checking 'Change of Control' triggers...", "Auditing structural overhang...", "Drafting strategic redlines..."];
+        async function runReasoning() {
+            const steps = ["Decrypting PDF...", "Auditing Change of Control...", "Identifying Revenue Leaks...", "Drafting Side-by-Side Redlines..."];
             const stream = document.getElementById('reasoningStream');
             stream.innerHTML = "";
-            for (const s of steps) {
+            for (const step of steps) {
                 const div = document.createElement('div');
-                div.className = "text-[10px] text-zinc-500 flex items-center py-1";
-                div.innerHTML = `<span class="w-1 h-1 bg-blue-500 mr-2"></span> ${s}`;
+                div.className = "text-[10px] text-zinc-500 flex items-center fade-in py-1";
+                div.innerHTML = `<span class="w-1 h-1 bg-blue-500 mr-2"></span> ${step}`;
                 stream.appendChild(div);
-                await new Promise(r => setTimeout(r, 800));
+                await new Promise(r => setTimeout(r, 600));
             }
+            return true;
         }
 
         function formatFinalReport(raw) {
-            const redFlagsBlock = raw.match(/RED FLAGS:([\s\S]*?)SUMMARY:/)?.[1] || "";
-            const flagLines = redFlagsBlock.split('\n').filter(l => l.includes('Proposed Redline Fix:'));
-
-            if (flagLines.length === 0) return `<div class="p-8 text-center text-zinc-500">Document analyzed. Standard terms detected.</div>`;
-
-            return flagLines.map(line => {
-                const [riskPart, fixPart] = line.split('Proposed Redline Fix:');
-                const riskClean = riskPart.replace(/^- /, '').trim();
-                const fixClean = fixPart ? fixPart.trim() : "Optimal protection language provided in full report.";
-
+            const redFlagsSection = raw.match(/RED FLAGS:([\s\S]*?)SUMMARY:/)?.[1] || "";
+            const lines = redFlagsSection.split('\n').filter(l => l.includes('Proposed Redline Fix:'));
+            
+            return lines.map(line => {
+                const [risk, fix] = line.split('Proposed Redline Fix:');
                 return `
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="legal-card p-6 border-l-2 border-red-900 bg-red-900/5">
-                            <span class="stat-label text-red-500">Current Risk Language</span>
-                            <p class="text-sm text-zinc-400 mt-4 leading-relaxed">${riskClean}</p>
+                            <span class="stat-label text-red-500">Vulnerability</span>
+                            <p class="text-sm text-zinc-400 mt-4 leading-relaxed">${risk.replace(/^- /, '')}</p>
                         </div>
                         <div class="legal-card p-6 border-l-2 border-green-600 bg-green-600/5">
-                            <span class="stat-label text-green-500">Strategic Axiom Fix</span>
-                            <p class="text-sm text-green-50 mt-4 leading-relaxed italic font-medium">${fixClean}</p>
+                            <span class="stat-label text-green-500">Strategic Redline</span>
+                            <p class="text-sm text-green-50 mt-4 leading-relaxed italic">${fix || 'Refer to Summary'}</p>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             }).join('');
         }
 
@@ -145,10 +141,13 @@
             const file = e.target.files[0];
             if (!file) return;
 
-            uploadZone.classList.add('hidden');
+            document.getElementById('uploadZone').classList.add('hidden');
+            document.getElementById('mainHeader').classList.add('hidden');
             document.getElementById('pricingSection').classList.add('hidden');
             document.getElementById('processing').classList.remove('hidden');
-            await startReasoning();
+
+            // Wait for reasoning animation to finish
+            await runReasoning();
 
             const arrayBuffer = await file.arrayBuffer();
             const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
@@ -162,7 +161,7 @@
             const response = await fetch('/api/audit', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ text: text.substring(0, 40000) })
+                body: JSON.stringify({ text: text })
             });
 
             const data = await response.json();
@@ -170,11 +169,13 @@
             localStorage.setItem('lastReport', fullText);
 
             document.getElementById('docTitlePreview').innerText = fullText.match(/DOCUMENT TITLE: (.*)/)?.[1] || "M&A Instrument";
+            document.getElementById('riskScorePreview').innerText = fullText.match(/RISK SCORE: (.*)/)?.[1] || "HIGH";
+            
+            const flagCount = (fullText.match(/Proposed Redline Fix:/g) || []).length;
             document.getElementById('vulnerabilityBreakdown').innerHTML = `
-                <div class="p-4 bg-zinc-900 rounded border border-zinc-800 text-center"><p class="stat-label">Triggers</p><p class="text-xl font-bold text-white">${(fullText.match(/Proposed Redline Fix:/g) || []).length}</p></div>
-                <div class="p-4 bg-zinc-900 rounded border border-zinc-800 text-center"><p class="stat-label">Status</p><p class="text-sm font-bold text-red-500 uppercase mt-2">Critical</p></div>
-                <div class="p-4 bg-zinc-900 rounded border border-zinc-800 text-center"><p class="stat-label">Remedy</p><p class="text-xs font-bold text-blue-500 mt-2 uppercase">Ready</p></div>
-            `;
+                <div class="p-4 bg-zinc-900 border border-zinc-800 rounded text-center"><p class="stat-label">Triggers</p><p class="text-xl font-bold text-white">${flagCount}</p></div>
+                <div class="p-4 bg-zinc-900 border border-zinc-800 rounded text-center"><p class="stat-label">Revenue Risk</p><p class="text-sm font-bold text-red-500 uppercase mt-1">High</p></div>
+                <div class="p-4 bg-zinc-900 border border-zinc-800 rounded text-center"><p class="stat-label">Remedy</p><p class="text-xs font-bold text-blue-500 mt-1 uppercase">Ready</p></div>`;
 
             document.getElementById('processing').classList.add('hidden');
             document.getElementById('previewSection').classList.remove('hidden');
@@ -188,15 +189,6 @@
                 document.getElementById('fullReportOutput').innerHTML = formatFinalReport(report);
                 document.getElementById('fullReportSection').classList.remove('hidden');
             } else { alert("Invalid Code"); }
-        }
-
-        if (window.location.search.includes('checkoutId')) {
-            const report = localStorage.getItem('lastReport');
-            if (report) {
-                document.getElementById('uploadZone').classList.add('hidden');
-                document.getElementById('fullReportOutput').innerHTML = formatFinalReport(report);
-                document.getElementById('fullReportSection').classList.remove('hidden');
-            }
         }
     </script>
 </body>
