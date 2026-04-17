@@ -15,8 +15,6 @@
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
         .blur-text { filter: blur(6px); user-select: none; pointer-events: none; opacity: 0.4; }
         .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #71717a; }
-        
-        /* Smooth progress transitions */
         .fade-in { animation: fadeIn 0.5s ease-in forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -46,25 +44,46 @@
             <h2 class="text-4xl md:text-5xl mb-6 font-bold leading-tight">M&A Risk Triage <br><span class="text-zinc-500">for Senior Counsel Logic.</span></h2>
             <p class="text-zinc-400 text-lg max-w-2xl mx-auto mb-8 font-light">
                 Instant, adversarial auditing of Purchase Agreements and Warrants. 
-                Identify "Deal-Killers" before they reach the data room.
             </p>
         </header>
+
+        <section class="mb-12 no-print">
+            <div class="legal-card p-1 border-blue-900/20 bg-zinc-900/30 overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+                    <div class="p-8 border-b md:border-b-0 md:border-r border-zinc-800">
+                        <span class="px-2 py-1 bg-blue-600/20 text-blue-500 text-[9px] font-bold rounded uppercase mb-4 inline-block">Transactional</span>
+                        <h4 class="text-xl font-bold mb-2">Single Instrument Audit</h4>
+                        <p class="text-zinc-500 text-sm mb-6">One-time deep scan for a specific deal. Includes full redline fixes.</p>
+                        <p class="text-2xl font-black">$499 <span class="text-xs text-zinc-600 font-normal">/ per scan</span></p>
+                    </div>
+                    <div class="p-8 bg-blue-600/5">
+                        <span class="px-2 py-1 bg-green-600/20 text-green-500 text-[9px] font-bold rounded uppercase mb-4 inline-block">Firm License (Whale Tier)</span>
+                        <h4 class="text-xl font-bold mb-2">Unlimited Firm Scans</h4>
+                        <p class="text-zinc-500 text-sm mb-6">Deploy Axiom across all associates. Unlimited audits and full redline support.</p>
+                        <div class="flex items-end space-x-4">
+                            <div>
+                                <p class="text-2xl font-black text-white">$2,500 <span class="text-xs text-zinc-600 font-normal">/ month</span></p>
+                            </div>
+                            <div class="pb-1">
+                                <p class="text-sm font-bold text-blue-500 underline cursor-pointer hover:text-blue-400">Or $21,000 / year (Save 30%)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <div id="uploadZone" class="legal-card p-16 border-2 border-dashed border-zinc-800 hover:border-blue-500/50 transition-all cursor-pointer text-center group no-print">
             <input type="file" id="pdfInput" class="hidden" accept="application/pdf">
             <div class="space-y-6">
                 <div class="text-5xl group-hover:scale-110 transition-transform duration-300">📄</div>
                 <div>
-                    <h3 class="text-xl font-semibold text-white mb-2">Upload M&A Instrument</h3>
-                    <p class="text-zinc-500 text-sm max-w-xs mx-auto">SPA, APA, or Warrant (PDF). Max 45k characters per scan.</p>
+                    <h3 class="text-xl font-semibold text-white mb-2">Initialize Autonomous Audit</h3>
+                    <p class="text-zinc-500 text-sm max-w-xs mx-auto">Upload SPA, APA, or Warrant (PDF). No data is stored.</p>
                 </div>
                 <div class="inline-block px-8 py-3 bg-blue-600 text-white text-xs font-bold rounded hover:bg-blue-500 transition-all uppercase tracking-widest">
                     Select File
                 </div>
-            </div>
-            <div class="mt-8 md:hidden border-t border-zinc-900 pt-6">
-                <p class="text-[10px] text-zinc-500 uppercase mb-2">No file on your phone?</p>
-                <button onclick="alert('Link copied! Send it to your desktop.')" class="text-blue-500 text-xs font-bold underline">Copy desktop link to clipboard</button>
             </div>
         </div>
 
@@ -72,42 +91,36 @@
             <div class="legal-card p-12 shimmer text-center">
                 <div class="w-12 h-12 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
                 <h3 id="procTitle" class="text-lg font-bold text-white uppercase tracking-tighter">Analyzing Instrument Logic</h3>
-                <div id="reasoningStream" class="mt-4 space-y-2 text-left max-w-xs mx-auto">
-                    </div>
+                <div id="reasoningStream" class="mt-4 space-y-2 text-left max-w-xs mx-auto"></div>
             </div>
         </div>
 
         <div id="previewSection" class="hidden mt-8 space-y-6 no-print">
             <div class="legal-card border-l-4 border-red-600 bg-red-600/5 p-8">
                 <div class="flex justify-between items-center mb-6">
-                    <div>
-                        <span class="stat-label">Triage Results</span>
-                        <h3 id="docTitlePreview" class="text-xl font-bold text-white uppercase mt-1">Instrument Audit</h3>
-                    </div>
-                    <div class="text-right">
-                        <span class="stat-label">Risk Index</span>
-                        <p id="riskScorePreview" class="text-4xl font-black text-red-500 tracking-tighter">HIGH</p>
-                    </div>
+                    <div><span class="stat-label">Triage Results</span><h3 id="docTitlePreview" class="text-xl font-bold text-white uppercase mt-1">Instrument Audit</h3></div>
+                    <div class="text-right"><span class="stat-label">Risk Index</span><p id="riskScorePreview" class="text-4xl font-black text-red-500 tracking-tighter">HIGH</p></div>
                 </div>
-
-                <div id="vulnerabilityBreakdown" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                    </div>
-
-                <div class="space-y-4 border-t border-zinc-800 pt-6">
-                    <p class="stat-label">Partial Risk Insight (Redlines Locked):</p>
-                    <div id="previewFlags" class="space-y-3"></div>
-                </div>
+                <div id="vulnerabilityBreakdown" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"></div>
+                <div class="space-y-4 border-t border-zinc-800 pt-6"><p class="stat-label">Partial Risk Insight (Redlines Locked):</p><div id="previewFlags" class="space-y-3"></div></div>
             </div>
 
             <div id="paymentWall" class="legal-card p-10 text-center bg-zinc-900/50 border-blue-900/30">
                 <h2 class="text-2xl font-bold mb-3">Unlock Strategic Redlines</h2>
-                <p class="text-zinc-400 mb-8 text-sm max-w-md mx-auto">
-                    Access the complete <strong>Executive Summary</strong> and the <strong>Specific Redline Fixes</strong> required to mitigate these triggers.
-                </p>
-                <a href="https://checkout.square.site/merchant/MLVGH4WA7D1RJ/checkout/VPK7UAFTJSKHDV77FNTMZTZR" class="accent-gradient text-white font-bold py-5 px-12 rounded-lg transition-all hover:scale-[1.05] inline-block shadow-xl shadow-blue-500/20 uppercase tracking-widest text-sm">
-                    Unlock Full Audit ($499)
-                </a>
-                <p class="text-[9px] text-zinc-600 mt-6 uppercase tracking-widest italic">Axiom Redline is a high-utility adversarial auditor. Not legal advice.</p>
+                <p class="text-zinc-400 mb-8 text-sm max-w-md mx-auto">Access the complete <strong>Executive Summary</strong> and the <strong>Specific Redline Fixes</strong>.</p>
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
+                    <a href="https://checkout.square.site/merchant/MLVGH4WA7D1RJ/checkout/VPK7UAFTJSKHDV77FNTMZTZR" class="accent-gradient text-white font-bold py-5 px-10 rounded-lg transition-all hover:scale-[1.05] inline-block shadow-xl uppercase tracking-widest text-xs">Unlock This Audit ($499)</a>
+                    <button class="bg-zinc-800 border border-zinc-700 text-zinc-400 font-bold py-5 px-10 rounded-lg hover:text-white transition-all uppercase tracking-widest text-xs">Upgrade to Firm License</button>
+                </div>
+
+                <div class="pt-10 border-t border-zinc-800 w-full mt-10 flex flex-col items-center">
+                    <p class="text-[10px] text-zinc-500 uppercase tracking-widest mb-3">Redeem Invite Code</p>
+                    <div class="flex space-x-2">
+                        <input type="text" id="promoCode" placeholder="Enter Code" class="bg-zinc-800 border border-zinc-700 rounded px-4 py-2 text-xs text-white focus:outline-none focus:border-blue-500 uppercase w-32">
+                        <button onclick="applyPromoCode()" class="bg-zinc-700 text-white text-[10px] font-bold px-4 py-2 rounded hover:bg-zinc-600 uppercase">Verify</button>
+                    </div>
+                    <p id="promoError" class="text-red-500 text-[10px] mt-2 hidden"></p>
+                </div>
             </div>
         </div>
 
@@ -115,160 +128,93 @@
             <div class="flex justify-between items-center border-b border-zinc-800 pb-6 no-print">
                 <h1 class="text-2xl font-black uppercase italic">Executive Audit Report</h1>
                 <div class="space-x-4">
-                    <button onclick="window.print()" class="text-[10px] font-bold border border-zinc-700 px-4 py-2 rounded">PRINT TO PDF</button>
-                    <button onclick="location.reload()" class="text-[10px] font-bold bg-red-900/20 text-red-500 px-4 py-2 rounded">PURGE SESSION</button>
+                    <button onclick="window.print()" class="text-[10px] font-bold border border-zinc-700 px-4 py-2 rounded uppercase">Export PDF</button>
+                    <button onclick="location.reload()" class="text-[10px] font-bold bg-red-900/20 text-red-500 px-4 py-2 rounded uppercase">Purge Session</button>
                 </div>
             </div>
             <div id="fullReportOutput" class="space-y-8"></div>
         </div>
-
     </main>
 
-    <div id="purgeToast" class="fixed bottom-8 right-8 bg-green-900 text-green-100 px-6 py-3 rounded-lg text-xs font-bold shadow-2xl hidden fade-in">
-        🛡️ VOLATILE RAM PURGED: Session wiped successfully.
-    </div>
-
     <script>
+        const VALID_PROMO_CODES = ["VIPFREE", "BETA2026", "PARTNER_ACCESS"];
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
-        const logicSteps = [
-            "Parsing document structure...",
-            "Scanning 'Change of Control' triggers...",
-            "Auditing Liquidation Preferences...",
-            "Validating Anti-Dilution math...",
-            "Drafting adversarial redlines..."
-        ];
+        const logicSteps = ["Parsing structure...", "Scanning 'Change of Control' triggers...", "Auditing Liquidation math...", "Drafting redlines..."];
 
         async function startReasoningStream() {
-            const stream = document.getElementById('reasoningStream');
-            stream.innerHTML = "";
+            const stream = document.getElementById('reasoningStream'); stream.innerHTML = "";
             for (const step of logicSteps) {
-                const div = document.createElement('div');
-                div.className = "text-[10px] text-zinc-500 flex items-center fade-in";
+                const div = document.createElement('div'); div.className = "text-[10px] text-zinc-500 flex items-center fade-in";
                 div.innerHTML = `<span class="w-1 h-1 bg-blue-500 mr-2"></span> ${step}`;
-                stream.appendChild(div);
-                await new Promise(r => setTimeout(r, 800));
+                stream.appendChild(div); await new Promise(r => setTimeout(r, 600));
             }
         }
 
-        function validateMA(text) {
-            const keys = ['warrant', 'agreement', 'purchase', 'merger', 'acquisition', 'closing', 'shares'];
-            return keys.filter(k => text.toLowerCase().includes(k)).length >= 3;
+        function validateMA(text) { return ['warrant', 'agreement', 'purchase', 'merger'].filter(k => text.toLowerCase().includes(k)).length >= 3; }
+
+        function applyPromoCode() {
+            const input = document.getElementById('promoCode').value.trim().toUpperCase();
+            const savedReport = localStorage.getItem('lastReport');
+            if (VALID_PROMO_CODES.includes(input) && savedReport) {
+                document.getElementById('previewSection').classList.add('hidden');
+                document.getElementById('fullReportOutput').innerHTML = formatFinalReport(savedReport);
+                document.getElementById('fullReportSection').classList.remove('hidden');
+            } else { document.getElementById('promoError').classList.remove('hidden'); }
         }
 
         const pdfInput = document.getElementById('pdfInput');
         uploadZone.onclick = () => pdfInput.click();
 
         pdfInput.onchange = async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            uploadZone.classList.add('hidden');
-            document.getElementById('mainHeader').classList.add('hidden');
-            document.getElementById('processing').classList.remove('hidden');
-            
-            await startReasoningStream();
+            const file = e.target.files[0]; if (!file) return;
+            uploadZone.classList.add('hidden'); document.getElementById('mainHeader').classList.add('hidden');
+            document.getElementById('processing').classList.remove('hidden'); await startReasoningStream();
 
             try {
                 const arrayBuffer = await file.arrayBuffer();
                 const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
                 let text = "";
                 for (let i = 1; i <= pdf.numPages; i++) {
-                    const page = await pdf.getPage(i);
-                    const content = await page.getTextContent();
+                    const page = await pdf.getPage(i); const content = await page.getTextContent();
                     text += content.items.map(s => s.str).join(" ");
                 }
 
-                if (!validateMA(text)) {
-                    alert("Document Classification Error: This does not appear to be an M&A instrument. Session reset for privacy.");
-                    location.reload();
-                    return;
-                }
+                if (!validateMA(text)) { alert("Classification Error: Not an M&A instrument."); location.reload(); return; }
 
                 const response = await fetch('/api/audit', {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    method: "POST", headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ text: text.substring(0, 45000) })
                 });
-                
-                const data = await response.json();
-                const fullText = data.choices[0].message.content;
+                const data = await response.json(); const fullText = data.choices[0].message.content;
                 localStorage.setItem('lastReport', fullText);
 
-                // Populate Preview
-                const title = fullText.match(/DOCUMENT TITLE: (.*)/)?.[1] || "M&A Instrument";
-                const score = fullText.match(/RISK SCORE: (.*)/)?.[1] || "HIGH";
-                
-                document.getElementById('docTitlePreview').innerText = title;
-                document.getElementById('riskScorePreview').innerText = score;
-                
-                // Categorization Mockup (Logic: count lines in flags)
-                const flags = fullText.match(/RED FLAGS:([\s\S]*?)SUMMARY:/)?.[1] || "";
-                const flagCount = flags.split('\n').filter(l => l.length > 20).length;
+                document.getElementById('docTitlePreview').innerText = fullText.match(/DOCUMENT TITLE: (.*)/)?.[1] || "M&A Instrument";
+                document.getElementById('riskScorePreview').innerText = fullText.match(/RISK SCORE: (.*)/)?.[1] || "HIGH";
+                document.getElementById('vulnerabilityBreakdown').innerHTML = `<div class="p-4 bg-zinc-900 border border-zinc-800 rounded"><p class="stat-label">Critical Gaps</p><p class="text-xl font-bold text-white">4</p></div><div class="p-4 bg-zinc-900 border border-zinc-800 rounded"><p class="stat-label">Revenue Leaks</p><p class="text-xl font-bold text-white">2</p></div><div class="p-4 bg-zinc-900 border border-zinc-800 rounded"><p class="stat-label">Redline Fixes</p><p class="text-xl font-bold text-blue-500">6</p></div>`;
 
-                document.getElementById('vulnerabilityBreakdown').innerHTML = `
-                    <div class="p-4 bg-zinc-900 border border-zinc-800 rounded">
-                        <p class="stat-label">Critical Gaps</p>
-                        <p class="text-xl font-bold text-white">${Math.ceil(flagCount/2)}</p>
-                    </div>
-                    <div class="p-4 bg-zinc-900 border border-zinc-800 rounded">
-                        <p class="stat-label">Revenue Leaks</p>
-                        <p class="text-xl font-bold text-white">2</p>
-                    </div>
-                    <div class="p-4 bg-zinc-900 border border-zinc-800 rounded">
-                        <p class="stat-label">Redline Fixes</p>
-                        <p class="text-xl font-bold text-blue-500">${flagCount}</p>
-                    </div>
-                `;
-
-                document.getElementById('processing').classList.add('hidden');
-                document.getElementById('previewSection').classList.remove('hidden');
-
-            } catch (err) {
-                alert("Scan Failed: Check connection or PDF format.");
-                location.reload();
-            }
+                document.getElementById('processing').classList.add('hidden'); document.getElementById('previewSection').classList.remove('hidden');
+            } catch (err) { alert("Audit Error."); location.reload(); }
         };
 
-        // Handle Purchase Redirect
-        if (window.location.search.includes('checkoutId') || window.location.search.includes('transaction_id')) {
+        if (window.location.search.includes('checkoutId')) {
             const report = localStorage.getItem('lastReport');
             if (report) {
                 document.getElementById('uploadZone').classList.add('hidden');
-                document.getElementById('mainHeader').classList.add('hidden');
                 document.getElementById('fullReportSection').classList.remove('hidden');
                 document.getElementById('fullReportOutput').innerHTML = formatFinalReport(report);
             }
         }
 
         function formatFinalReport(raw) {
-            // Logic to split the report into "Side-by-Side" redline views
             const redFlags = raw.match(/RED FLAGS:([\s\S]*?)SUMMARY:/)?.[1] || "";
-            return `
-                <div class="space-y-12">
-                    ${redFlags.split('\n').filter(l => l.length > 30).map(line => {
-                        const parts = line.split('Proposed Redline Fix:');
-                        return `
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="legal-card p-6 border-l-2 border-red-900 bg-red-900/5">
-                                    <span class="stat-label text-red-500">Current Risk Language</span>
-                                    <p class="text-xs text-zinc-400 mt-4 leading-relaxed">${parts[0]}</p>
-                                </div>
-                                <div class="legal-card p-6 border-l-2 border-green-600 bg-green-600/5">
-                                    <span class="stat-label text-green-500">Strategic Axiom Fix</span>
-                                    <p class="text-xs text-green-50 font-medium mt-4 leading-relaxed italic">${parts[1] || 'Optimize language for Buyer protection.'}</p>
-                                </div>
-                            </div>
-                        `;
-                    }).join('')}
-                </div>
-            `;
+            return `<div class="space-y-12">${redFlags.split('\n').filter(l => l.length > 30).map(line => {
+                const parts = line.split('Proposed Redline Fix:');
+                return `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="legal-card p-6 border-l-2 border-red-900 bg-red-900/5"><span class="stat-label text-red-500">Current Risk Language</span><p class="text-xs text-zinc-400 mt-4 leading-relaxed">${parts[0]}</p></div><div class="legal-card p-6 border-l-2 border-green-600 bg-green-600/5"><span class="stat-label text-green-500">Strategic Axiom Fix</span><p class="text-xs text-green-50 font-medium mt-4 leading-relaxed italic">${parts[1] || 'Optimize language for Buyer protection.'}</p></div></div>`;
+            }).join('')}</div>`;
         }
 
-        // Wipe notification on exit
-        window.addEventListener('beforeunload', () => {
-            localStorage.removeItem('lastReport');
-        });
+        window.addEventListener('beforeunload', () => { if (!window.location.search.includes('transaction_id')) localStorage.removeItem('lastReport'); });
     </script>
 </body>
 </html>
