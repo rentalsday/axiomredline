@@ -18,8 +18,14 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
         .disclaimer-text { font-size: 9px; color: #52525b; line-height: 1.4; text-align: justify; }
 
+        /* Status Light Pulse */
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.9); }
+        }
+        .animate-status-pulse { animation: statusPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
         @media print { 
-            /* Restoring standard margins to bring back headers/page numbers */
             body { margin: 2cm; background: white !important; color: black !important; }
             .no-print { display: none !important; } 
             #fullReportSection { display: block !important; }
@@ -33,13 +39,20 @@
 </head>
 <body class="min-h-screen flex flex-col items-center">
 
-    <div id="errorModal" class="fixed inset-0 bg-black/90 z-[100] hidden flex items-center justify-center p-6">
+    <div id="errorModal" class="fixed inset-0 bg-black/95 z-[100] hidden flex items-center justify-center p-6">
         <div class="legal-card max-w-md w-full p-8 border-zinc-800 text-center shadow-2xl">
             <div id="modalIcon" class="text-4xl mb-4">⚠️</div>
             <h3 id="modalTitle" class="text-xl font-bold text-white mb-2 uppercase tracking-tighter">Notification</h3>
             <p id="errorModalText" class="text-zinc-400 text-sm mb-6 leading-relaxed"></p>
-            <button id="modalActionBtn" onclick="location.reload()" class="bg-blue-600 text-white font-bold py-2 px-8 rounded text-xs uppercase tracking-widest hover:bg-blue-700 transition-all">Understood</button>
+            <button id="modalActionBtn" class="bg-blue-600 text-white font-bold py-2 px-8 rounded text-xs uppercase tracking-widest hover:bg-blue-700 transition-all">Understood</button>
         </div>
+    </div>
+
+    <div id="securityHud" class="fixed bottom-8 right-8 z-50 hidden no-print">
+        <button onclick="secureExit()" class="legal-card px-5 py-3 border-zinc-800 bg-black/90 backdrop-blur-md shadow-2xl flex items-center space-x-3 hover:border-red-500/50 transition-all group">
+            <span class="w-2 h-2 bg-red-600 rounded-full group-hover:animate-ping"></span>
+            <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest group-hover:text-red-500">Purge Session</span>
+        </button>
     </div>
 
     <nav class="w-full max-w-6xl flex justify-between items-center p-8 no-print">
@@ -48,11 +61,11 @@
             <h1 class="text-xl font-bold tracking-tighter uppercase">AXIOM <span class="text-blue-500">REDLINE</span></h1>
         </div>
         <div class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center">
-            <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span> RAM-ONLY SECURE SESSION
+            <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-status-pulse"></span> SECURE RAM INSTANCE
         </div>
     </nav>
 
-    <main class="w-full max-w-4xl px-6 pb-24">
+    <main id="appContainer" class="w-full max-w-4xl px-6 pb-24">
         <header id="mainHeader" class="text-center py-12 no-print">
             <h2 class="text-4xl md:text-5xl mb-6 font-bold leading-tight">M&A Risk Triage <br><span class="text-zinc-500">for Senior Counsel Logic.</span></h2>
             <p class="text-zinc-400 text-lg max-w-2xl mx-auto mb-8 font-light">Adversarial auditing of M&A instruments. Identify "Deal-Killers" instantly.</p>
@@ -108,7 +121,7 @@
             <div id="fullReportOutput" class="space-y-8"></div>
         </div>
 
-        <footer class="mt-20 pt-10 border-t border-zinc-900">
+        <footer id="mainFooter" class="mt-20 pt-10 border-t border-zinc-900 no-print">
             <p class="disclaimer-text uppercase font-bold text-zinc-600 mb-2">Legal Disclaimer & Limitation of Liability</p>
             <p class="disclaimer-text">Axiom Redline is an automated large-language model (LLM) analysis tool. It does not provide legal advice, and its outputs do not constitute an attorney-client relationship. All redlines and risk scores are for informational purposes only and must be reviewed by qualified legal counsel prior to use in any transaction. Axiom Redline and its affiliates are not liable for any financial or legal damages resulting from the use of this report. By using this tool, you acknowledge that this is a "Human-in-the-Loop" assistant and you assume all risks associated with the implementation of its suggestions.</p>
         </footer>
@@ -117,7 +130,26 @@
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
-        // Custom Modal Controller
+        function secureExit() {
+            localStorage.clear();
+            sessionStorage.clear();
+            document.body.innerHTML = `
+                <div class="h-screen w-screen flex flex-col items-center justify-center bg-black fade-in text-center p-6">
+                    <div class="w-16 h-1 bg-blue-600 mb-8 animate-pulse"></div>
+                    <h1 class="text-white font-black text-3xl uppercase tracking-tighter mb-4">🛡️ Session Purged</h1>
+                    <p class="text-zinc-500 text-xs uppercase tracking-[0.3em] leading-relaxed">
+                        All volatile RAM cleared.<br>No document data remains on server or client.
+                    </p>
+                    <button onclick="location.reload()" class="mt-12 text-[10px] font-bold text-blue-500 border border-blue-900/50 px-6 py-2 rounded uppercase tracking-widest">Restart Axiom Instance</button>
+                </div>
+            `;
+        }
+
+        window.addEventListener('pagehide', () => {
+            localStorage.clear();
+            sessionStorage.clear();
+        });
+
         function showModal(title, msg, icon = "⚠️", showReload = true) {
             const modal = document.getElementById('errorModal');
             document.getElementById('modalTitle').innerText = title;
@@ -138,19 +170,19 @@
         async function runLegalReasoning(realText) {
             const stream = document.getElementById('reasoningStream');
             stream.innerHTML = "";
-            const keywords = ["agreement", "merger", "acquisition", "share", "purchase", "closing", "seller", "buyer", "transaction", "warrant"];
+            const keywords = ["agreement", "merger", "acquisition", "share", "purchase", "closing", "seller", "buyer", "transaction"];
             const isMA = keywords.some(k => realText.toLowerCase().includes(k));
 
             if (!isMA) {
-                showModal("Invalid Instrument", "The uploaded document does not contain required M&A structural markers. Please upload a Purchase Agreement or Merger Plan.");
+                showModal("Invalid Instrument", "Document lacks required M&A markers. Please upload a Purchase Agreement or Merger Plan.");
                 return false;
             }
 
-            const snippets = realText.match(/(Section\s?\d+|Article\s?\d+|Exhibit\s?[A-Z])/gi) || ["Structural sections"];
+            const snippets = realText.match(/(Section\s?\d+|Article\s?\d+)/gi) || ["Structural sections"];
             const steps = [
-                `Verifying structural integrity of extracted text...`,
-                `Identifying 'Change of Control' triggers in ${snippets[0] || 'Recitals'}...`,
-                `Cross-referencing ${snippets[1] || 'Section 2.01'} with Liquidation Preferences...`,
+                `Verifying RAM-only environment isolation...`,
+                `Scanning ${snippets[0] || 'Section 1.01'} for Change of Control triggers...`,
+                `Cross-referencing ${snippets[1] || 'Section 4.02'} with Liquidation Stacks...`,
                 `Auditing Anti-Dilution structural math...`,
                 `Finalizing adversarial redline recommendations...`
             ];
@@ -212,10 +244,11 @@
 
                 document.getElementById('processing').classList.add('hidden');
                 document.getElementById('previewSection').classList.remove('hidden');
+                document.getElementById('securityHud').classList.remove('hidden');
 
             } catch (err) {
                 console.error(err);
-                showModal("System Error", "Server connectivity lost or API timeout. Please ensure your environment is active.", "🚫");
+                showModal("System Error", "Server connectivity lost or API timeout.", "🚫");
             }
         };
 
@@ -231,12 +264,11 @@
         }
 
         function applyPromoCode() {
-            const codeInput = document.getElementById('promoCode');
-            const code = codeInput.value.trim().toUpperCase();
+            const code = document.getElementById('promoCode').value.trim().toUpperCase();
             const errorLabel = document.getElementById('errorCode');
             
             if (sessionStorage.getItem('promo_locked')) {
-                showModal("Access Locked", "The promo code is not valid.", "🔒", false);
+                showModal("Access Locked", "This session is already authorized. Re-entry of codes is disabled for security.", "🔒", false);
                 return;
             }
 
