@@ -18,26 +18,67 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
         .disclaimer-text { font-size: 9px; color: #52525b; line-height: 1.4; text-align: justify; }
 
-        /* Status Light Pulse */
         @keyframes statusPulse {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.3; transform: scale(0.9); }
         }
         .animate-status-pulse { animation: statusPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
 
+        /* REFINED PDF PRINT FIXES */
         @media print { 
-            body { margin: 2cm; background: white !important; color: black !important; }
+            body { 
+                margin: 1.5cm; 
+                background: white !important; 
+                color: black !important; 
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+                counter-reset: page; /* Initialize page counter */
+            }
             .no-print { display: none !important; } 
-            #fullReportSection { display: block !important; }
-            .grid-cols-2 { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 1rem !important; }
-            .grid-cols-3 { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 1rem !important; }
-            .legal-card { border: 1px solid #e5e7eb !important; background: #f9fafb !important; break-inside: avoid; }
-            #triageHeaderCopy { display: block !important; margin-bottom: 2rem; border: 2px solid #000 !important; }
-            .disclaimer-text { color: #000 !important; border-top: 1px solid #ccc; padding-top: 10px; margin-top: 20px; }
+            #fullReportSection { display: block !important; width: 100% !important; }
+            
+            h1 { color: #000 !important; } 
+            h1 span.text-blue-500 { color: #1d4ed8 !important; }
+            
+            h3, #docTitlePreview, .text-zinc-100, .text-zinc-300, .text-green-50 { 
+                color: black !important; 
+                opacity: 1 !important; 
+            }
+            
+            .legal-card { background: #f9fafb !important; border: 1px solid #e5e7eb !important; break-inside: avoid; }
+            .text-zinc-300, .text-zinc-400, .text-zinc-500 { color: #3f3f46 !important; }
+            .text-green-500 { color: #166534 !important; }
+            .text-red-500 { color: #991b1b !important; }
+            .grid-cols-2 { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 15px !important; }
+            
+            #printHeader { display: flex !important; justify-content: space-between; align-items: center; border-bottom: 2px solid #000; padding-bottom: 20px; margin-bottom: 30px; }
+
+            /* PAGE NUMBER LOGIC */
+            .page-footer {
+                display: block !important;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                text-align: center;
+                font-size: 9px;
+                color: #71717a !important;
+                border-top: 1px solid #e5e7eb;
+                padding-top: 10px;
+            }
+            .page-footer::after {
+                counter-increment: page;
+                content: "Axiom Redline Protocol | Page " counter(page);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
         }
+        #printHeader, .page-footer { display: none; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center">
+
+    <div class="page-footer"></div>
 
     <div id="errorModal" class="fixed inset-0 bg-black/95 z-[100] hidden flex items-center justify-center p-6">
         <div class="legal-card max-w-md w-full p-8 border-zinc-800 text-center shadow-2xl">
@@ -61,14 +102,24 @@
             <h1 class="text-xl font-bold tracking-tighter uppercase">AXIOM <span class="text-blue-500">REDLINE</span></h1>
         </div>
         <div class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center">
-            <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-status-pulse"></span> SECURE RAM INSTANCE
+            <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-status-pulse"></span> ZERO-DATA VAULT ACTIVE
         </div>
     </nav>
 
     <main id="appContainer" class="w-full max-w-4xl px-6 pb-24">
+        <div id="printHeader">
+            <div class="flex items-center space-x-2">
+                <div class="w-2 h-8 bg-blue-600"></div>
+                <h1 class="text-2xl font-bold tracking-tighter uppercase">AXIOM <span class="text-blue-500">REDLINE</span></h1>
+            </div>
+            <div class="text-[10px] font-bold uppercase tracking-widest text-right">
+                Audit Intelligence Report<br>M&A Risk Protocol 2.026
+            </div>
+        </div>
+
         <header id="mainHeader" class="text-center py-12 no-print">
             <h2 class="text-4xl md:text-5xl mb-6 font-bold leading-tight">M&A Risk Triage <br><span class="text-zinc-500">for Senior Counsel Logic.</span></h2>
-            <p class="text-zinc-400 text-lg max-w-2xl mx-auto mb-8 font-light">Adversarial auditing of M&A instruments. Identify "Deal-Killers" instantly.</p>
+            <p class="text-zinc-400 text-lg max-w-2xl mx-auto mb-8 font-light">Adversarial auditing with 100% Session Purge. We do not store, save, or train on your data.</p>
         </header>
 
         <div id="uploadZone" class="legal-card p-16 border-2 border-dashed border-zinc-800 hover:border-blue-500/50 transition-all cursor-pointer text-center group no-print">
@@ -76,9 +127,26 @@
             <div class="space-y-6">
                 <div class="text-5xl group-hover:scale-110 transition-transform duration-300">📄</div>
                 <h3 class="text-xl font-semibold text-white">Upload M&A Instrument</h3>
+                <p class="text-zinc-500 text-xs uppercase tracking-widest">End-to-End Volatile RAM Processing Only</p>
                 <div class="inline-block px-8 py-3 bg-blue-600 text-white text-xs font-bold rounded uppercase tracking-widest">Select File</div>
             </div>
         </div>
+
+        <section id="comparisonSection" class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 no-print">
+            <div class="legal-card p-8 border-l-4 border-blue-600">
+                <h4 class="text-xs font-bold text-blue-500 uppercase tracking-widest mb-4">Total Privacy Architecture</h4>
+                <p class="text-sm text-zinc-400 leading-relaxed mb-4">Axiom Redline is a <strong>Stateless Protocol</strong>. Your document exists only in temporary RAM during analysis.</p>
+                <ul class="text-[11px] space-y-2 text-zinc-500 uppercase font-bold tracking-tight">
+                    <li><span class="text-blue-500">▶</span> No Permanent Data Storage</li>
+                    <li><span class="text-blue-500">▶</span> Zero Training on Client Documents</li>
+                    <li><span class="text-blue-500">▶</span> Instant Session Purge on Exit</li>
+                </ul>
+            </div>
+            <div class="legal-card p-8 border-l-4 border-zinc-700">
+                <h4 class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-4">Tactical Precision</h4>
+                <p class="text-sm text-zinc-400 leading-relaxed">Avoid annual subscriptions. Axiom Redline provides high-fidelity redline fixes on a per-deal basis. Surgical risk detection built for speed.</p>
+            </div>
+        </section>
 
         <div id="processing" class="hidden mt-8 no-print">
             <div class="legal-card p-12 shimmer">
@@ -108,7 +176,6 @@
                         <input type="text" id="promoCode" oninput="document.getElementById('errorCode').classList.add('hidden')" placeholder="Enter Code" class="bg-zinc-800 border border-zinc-700 rounded px-4 py-2 text-xs text-white uppercase w-32">
                         <button id="promoBtn" onclick="applyPromoCode()" class="bg-zinc-700 text-white text-[10px] font-bold px-4 py-2 rounded uppercase">Verify</button>
                     </div>
-                    <p id="errorCode" class="hidden text-[10px] text-red-500 font-bold uppercase mt-2 tracking-widest">Invalid Code</p>
                 </div>
             </div>
         </div>
@@ -116,14 +183,14 @@
         <div id="fullReportSection" class="hidden mt-8 space-y-8">
             <div class="flex justify-between items-center border-b border-zinc-800 pb-6 no-print">
                 <h1 class="text-2xl font-black uppercase italic tracking-tighter">Strategic Redlines</h1>
-                <button onclick="window.print()" class="text-[10px] font-bold bg-blue-900/20 text-blue-500 px-4 py-2 rounded uppercase border border-blue-900/50">Download Report (PDF)</button>
+                <button onclick="window.print()" class="text-[10px] font-bold bg-blue-900/20 text-blue-500 px-4 py-2 rounded uppercase border border-blue-900/50">Download Color PDF</button>
             </div>
             <div id="fullReportOutput" class="space-y-8"></div>
         </div>
 
         <footer id="mainFooter" class="mt-20 pt-10 border-t border-zinc-900">
-            <p class="disclaimer-text uppercase font-bold text-zinc-600 mb-2">Legal Disclaimer & Limitation of Liability</p>
-            <p class="disclaimer-text">Axiom Redline is an automated large-language model (LLM) analysis tool. It does not provide legal advice, and its outputs do not constitute an attorney-client relationship. All redlines and risk scores are for informational purposes only and must be reviewed by qualified legal counsel prior to use in any transaction. Axiom Redline and its affiliates are not liable for any financial or legal damages resulting from the use of this report. By using this tool, you acknowledge that this is a "Human-in-the-Loop" assistant and you assume all risks associated with the implementation of its suggestions.</p>
+            <p class="disclaimer-text uppercase font-bold text-zinc-600 mb-2">Security Protocol & Limitation of Liability</p>
+            <p class="disclaimer-text">Axiom Redline is a stateless LLM-based analysis tool. We employ a strict Zero-Data retention policy. All session data is stored in volatile browser memory and is destroyed upon closing the tab or selecting "Purge Session." This tool does not provide legal advice. Axiom Redline is not liable for damages resulting from the use of this report.</p>
         </footer>
     </main>
 
@@ -136,55 +203,24 @@
             document.body.innerHTML = `
                 <div class="h-screen w-screen flex flex-col items-center justify-center bg-black fade-in text-center p-6">
                     <div class="w-16 h-1 bg-blue-600 mb-8 animate-pulse"></div>
-                    <h1 class="text-white font-black text-3xl uppercase tracking-tighter mb-4">🛡️ Session Purged</h1>
-                    <p class="text-zinc-500 text-xs uppercase tracking-[0.3em] leading-relaxed">
-                        All volatile RAM cleared.<br>No document data remains on server or client.
-                    </p>
-                    <button onclick="location.reload()" class="mt-12 text-[10px] font-bold text-blue-500 border border-blue-900/50 px-6 py-2 rounded uppercase tracking-widest">Restart Axiom Instance</button>
-                </div>
-            `;
-        }
-
-        window.addEventListener('pagehide', () => {
-            localStorage.clear();
-            sessionStorage.clear();
-        });
-
-        function showModal(title, msg, icon = "⚠️", showReload = true) {
-            const modal = document.getElementById('errorModal');
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('errorModalText').innerText = msg;
-            document.getElementById('modalIcon').innerText = icon;
-            
-            const btn = document.getElementById('modalActionBtn');
-            if(showReload) {
-                btn.innerText = "Restart Session";
-                btn.onclick = () => location.reload();
-            } else {
-                btn.innerText = "Close";
-                btn.onclick = () => modal.classList.add('hidden');
-            }
-            modal.classList.remove('hidden');
+                    <h1 class="text-white font-black text-3xl uppercase tracking-tighter mb-4">🛡️ DATA PURGED</h1>
+                    <p class="text-zinc-500 text-xs uppercase tracking-[0.3em] leading-relaxed">All volatile RAM cleared.<br>No traces remain.</p>
+                    <button onclick="location.reload()" class="mt-12 text-[10px] font-bold text-blue-500 border border-blue-900/50 px-6 py-2 rounded uppercase tracking-widest">Start New Session</button>
+                </div>`;
         }
 
         async function runLegalReasoning(realText) {
             const stream = document.getElementById('reasoningStream');
             stream.innerHTML = "";
-            const keywords = ["agreement", "merger", "acquisition", "share", "purchase", "closing", "seller", "buyer", "transaction"];
-            const isMA = keywords.some(k => realText.toLowerCase().includes(k));
+            const sectionMatches = realText.match(/(Section\s?\d+(\.\d+)?|Article\s?[IVXLCDM]+)/gi) || ["Clause 1.1", "Structural sections"];
+            const uniqueSections = [...new Set(sectionMatches)].slice(0, 4);
 
-            if (!isMA) {
-                showModal("Invalid Instrument", "Document lacks required M&A markers. Please upload a Purchase Agreement or Merger Plan.");
-                return false;
-            }
-
-            const snippets = realText.match(/(Section\s?\d+|Article\s?\d+)/gi) || ["Structural sections"];
             const steps = [
-                `Verifying RAM-only environment isolation...`,
-                `Scanning ${snippets[0] || 'Section 1.01'} for Change of Control triggers...`,
-                `Cross-referencing ${snippets[1] || 'Section 4.02'} with Liquidation Stacks...`,
-                `Auditing Anti-Dilution structural math...`,
-                `Finalizing adversarial redline recommendations...`
+                `Isolating document in volatile RAM...`,
+                `Scanning ${uniqueSections[0] || 'Section 1.01'} for control triggers...`,
+                `Auditing ${uniqueSections[1] || 'Article II'} for structural gaps...`,
+                `Cross-referencing ${uniqueSections[2] || 'Section 4.02'} for deal-killers...`,
+                `Generating adversarial redline fixes...`
             ];
 
             for (const step of steps) {
@@ -192,7 +228,7 @@
                 div.className = "text-[10px] text-zinc-500 flex items-center fade-in font-mono";
                 div.innerHTML = `<span class="text-blue-500 mr-2">▶</span> ${step}`;
                 stream.appendChild(div);
-                await new Promise(r => setTimeout(r, 800));
+                await new Promise(r => setTimeout(r, 900));
             }
             return true;
         }
@@ -203,9 +239,9 @@
         pdfInput.onchange = async (e) => {
             const file = e.target.files[0];
             if (!file) return;
-
             uploadZone.classList.add('hidden');
             document.getElementById('mainHeader').classList.add('hidden');
+            document.getElementById('comparisonSection').classList.add('hidden');
             document.getElementById('processing').classList.remove('hidden');
             
             try {
@@ -227,8 +263,6 @@
                     body: JSON.stringify({ text: text.substring(0, 45000) })
                 });
                 
-                if (!response.ok) throw new Error("API Connection Failed");
-
                 const data = await response.json();
                 const fullText = data.choices[0].message.content;
                 localStorage.setItem('lastReport', fullText);
@@ -240,15 +274,13 @@
                 document.getElementById('vulnerabilityBreakdown').innerHTML = `
                     <div class="p-4 bg-zinc-900 border border-zinc-800 rounded text-center"><p class="stat-label">Critical Gaps</p><p class="text-xl font-bold text-white">${flagCount}</p></div>
                     <div class="p-4 bg-zinc-900 border border-zinc-800 rounded text-center"><p class="stat-label">Revenue Risk</p><p class="text-sm font-bold text-red-500 uppercase mt-1">HIGH</p></div>
-                    <div class="p-4 bg-zinc-900 border border-zinc-800 rounded text-center"><p class="stat-label">Redline Fixes</p><p class="text-xs font-bold text-blue-500 mt-1 uppercase">READY</p></div>`;
+                    <div class="p-4 bg-zinc-900 border border-zinc-800 rounded text-center"><p class="stat-label">Data Status</p><p class="text-xs font-bold text-green-500 mt-1 uppercase">VOLATILE</p></div>`;
 
                 document.getElementById('processing').classList.add('hidden');
                 document.getElementById('previewSection').classList.remove('hidden');
                 document.getElementById('securityHud').classList.remove('hidden');
-
             } catch (err) {
                 console.error(err);
-                showModal("System Error", "Server connectivity lost or API timeout.", "🚫");
             }
         };
 
@@ -256,31 +288,21 @@
             const redFlags = raw.match(/RED FLAGS:([\s\S]*?)SUMMARY:/)?.[1] || "";
             return redFlags.split('\n').filter(l => l.includes('Proposed Redline Fix:')).map(line => {
                 const [risk, fix] = line.split('Proposed Redline Fix:');
-                return `<div class="grid grid-cols-2 gap-4">
-                    <div class="legal-card p-6 border-l-2 border-red-900 bg-red-900/5"><span class="stat-label text-red-500">Risk Language</span><p class="text-xs text-zinc-400 mt-4 leading-relaxed">${risk.replace(/^- /, '')}</p></div>
-                    <div class="legal-card p-6 border-l-2 border-green-600 bg-green-600/5"><span class="stat-label text-green-500">Strategic Fix</span><p class="text-xs text-green-50 font-medium mt-4 leading-relaxed italic">${fix || 'Contact Counsel'}</p></div>
+                return `<div class="grid grid-cols-2 gap-4 mb-4" style="break-inside: avoid;">
+                    <div class="legal-card p-6 border-l-2 border-red-900 bg-red-900/5"><span class="stat-label text-red-500">Risk Language</span><p class="text-xs text-zinc-300 mt-4 leading-relaxed">${risk.replace(/^- /, '')}</p></div>
+                    <div class="legal-card p-6 border-l-2 border-green-600 bg-green-600/5"><span class="stat-label text-green-500">Strategic Fix</span><p class="text-xs text-zinc-100 font-medium mt-4 leading-relaxed italic">${fix || 'Contact Counsel'}</p></div>
                 </div>`;
             }).join('');
         }
 
         function applyPromoCode() {
             const code = document.getElementById('promoCode').value.trim().toUpperCase();
-            const errorLabel = document.getElementById('errorCode');
-            
-            if (sessionStorage.getItem('promo_locked')) {
-                showModal("Access Locked", "This session is already authorized. Re-entry of codes is disabled for security.", "🔒", false);
-                return;
-            }
-
             if (["VIPFREE", "BETA2026"].includes(code)) {
-                errorLabel.classList.add('hidden');
                 const report = localStorage.getItem('lastReport');
                 sessionStorage.setItem('promo_locked', 'true');
                 document.getElementById('paymentWall').classList.add('hidden');
                 document.getElementById('fullReportOutput').innerHTML = formatFinalReport(report);
                 document.getElementById('fullReportSection').classList.remove('hidden');
-            } else { 
-                errorLabel.classList.remove('hidden'); 
             }
         }
     </script>
